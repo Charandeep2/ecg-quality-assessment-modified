@@ -209,5 +209,6 @@ def predict_ecg(request: PredictionRequest):
         dropout_leads=dropout_leads,
         core_slice=core_slice,
         xai_factors=xai_factors,
+        condition_cluster=result.get("condition_cluster"),
     )
 

@@ -48,6 +48,12 @@ from core.features import (
     pad_core_tensor,
 )
 from core.pipeline import ECGPipeline
+from core.clustering import (
+    CLUSTERING_FEATURES,
+    CLUSTER_PROFILES,
+    get_cluster_model,
+    predict_signal_condition,
+)
 from core.preprocessing import (
     calculate_characteristics,
     clean_ecg_adaptive,
@@ -133,5 +139,10 @@ __all__ = [
     "plot_core_slice",
     # Pipeline
     "ECGPipeline",
+    # Clustering
+    "CLUSTERING_FEATURES",
+    "CLUSTER_PROFILES",
+    "get_cluster_model",
+    "predict_signal_condition",
 ]
 

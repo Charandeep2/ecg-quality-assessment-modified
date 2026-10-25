@@ -24,11 +24,12 @@ def list_records(
         raise HTTPException(status_code=500, detail="Dataset metadata could not be loaded.")
 
     df = data.copy()
-    if label:
+    if label and isinstance(label, str):
         df = df[df["label"].str.lower() == label.lower()]
 
     records = []
-    for _, row in df.head(limit).iterrows():
+    max_count = int(limit) if isinstance(limit, (int, float)) else 50
+    for _, row in df.head(max_count).iterrows():
         records.append(RecordSummary(
             record_id=str(row["record_id"]),
             label=str(row.get("label", "Unknown")),

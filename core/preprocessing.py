@@ -6,6 +6,7 @@ from typing import Dict, List, Optional, Tuple, Union
 
 import numpy as np
 import pandas as pd
+from scipy import signal as scipy_signal
 from scipy.signal import butter, sosfiltfilt
 
 from core.config import FS, LEAD_NAMES
@@ -13,38 +14,79 @@ from core.config import FS, LEAD_NAMES
 
 def calculate_characteristics(signal: np.ndarray, fs: int = FS) -> Dict[str, float]:
     """
-    Compute key statistical characteristics and baseline variation of the 12-lead ECG.
+    Compute the full suite of 11 candidate statistical and spectral signal characteristics
+    (as established in Adaptive Scalogram-Tensor Processing research, NIT Goa):
 
-    Features computed:
-    - mean_rms, max_rms: Root-mean-square amplitude across leads
-    - mean_std, max_std: Standard deviation across leads
-    - mean_abs_amplitude: Mean absolute amplitude
-    - mean_baseline_variation, max_baseline_variation: Standard deviation of moving average trend
+    1. Magnitude / Energy:
+       - mean_rms, max_rms: Raw root-mean-square amplitude across leads
+       - mean_centered_rms, max_centered_rms: DC-offset-subtracted dynamic RMS
+       - mean_abs_amplitude: Mean absolute electrical potential
+    2. Variation / Baseline:
+       - mean_std, max_std: Standard deviation per lead
+       - mean_baseline_variation, max_baseline_variation: Standard deviation of 200ms trend
+    3. Frequency / Noise:
+       - mean_high_frequency_ratio, max_high_frequency_ratio: Spectral energy >= 20 Hz
+    4. Powerline Interference:
+       - mean_powerline_ratio, max_powerline_ratio: Mains electrical grid hum (50/60 Hz)
     """
     if signal.ndim != 2:
         raise ValueError("Signal must have shape (samples, leads).")
 
+    # 1. Magnitude & Centered Measures
     rms_values = np.sqrt(np.mean(signal ** 2, axis=0))
+    centered_signal = signal - np.mean(signal, axis=0)
+    centered_rms_values = np.sqrt(np.mean(centered_signal ** 2, axis=0))
     std_values = np.std(signal, axis=0)
     abs_values = np.mean(np.abs(signal), axis=0)
 
-    # 200ms moving-average kernel to estimate baseline wander trend
+    # 2. Baseline Wander via 200ms Moving-Average
     window = max(3, int(fs * 0.2))
     kernel = np.ones(window) / window
     baseline_values = []
-
     for lead in range(signal.shape[1]):
         trend = np.convolve(signal[:, lead], kernel, mode="same")
         baseline_values.append(float(np.std(trend)))
 
+    # 3. Spectral Frequency & Powerline Ratios (Periodogram PSD)
+    hf_ratios = []
+    pl_ratios = []
+    for lead in range(signal.shape[1]):
+        lead_std = std_values[lead]
+        if lead_std <= 1e-8:
+            hf_ratios.append(0.0)
+            pl_ratios.append(0.0)
+            continue
+
+        freqs, pxx = scipy_signal.periodogram(signal[:, lead], fs=fs)
+        total_p = float(np.sum(pxx))
+        if total_p <= 1e-12:
+            hf_ratios.append(0.0)
+            pl_ratios.append(0.0)
+            continue
+
+        # High-frequency power ratio (muscle tremor / EMG >= 20 Hz)
+        hf_p = float(np.sum(pxx[freqs >= 20.0]))
+        hf_ratios.append(hf_p / total_p)
+
+        # Powerline power ratio (50 Hz and 60 Hz mains grid hum)
+        pl_p = float(np.sum(pxx[(freqs >= 49.0) & (freqs <= 51.0)])) + \
+               float(np.sum(pxx[(freqs >= 59.0) & (freqs <= 61.0)]))
+        pl_ratios.append(pl_p / total_p)
+
     return {
         "mean_rms": float(np.mean(rms_values)),
         "max_rms": float(np.max(rms_values)),
+        "mean_centered_rms": float(np.mean(centered_rms_values)),
+        "max_centered_rms": float(np.max(centered_rms_values)),
         "mean_std": float(np.mean(std_values)),
         "max_std": float(np.max(std_values)),
         "mean_abs_amplitude": float(np.mean(abs_values)),
         "mean_baseline_variation": float(np.mean(baseline_values)),
         "max_baseline_variation": float(np.max(baseline_values)),
+        "mean_high_frequency_ratio": float(np.mean(hf_ratios)),
+        "max_high_frequency_ratio": float(np.max(hf_ratios)),
+        "mean_powerline_ratio": float(np.mean(pl_ratios)),
+        "max_powerline_ratio": float(np.max(pl_ratios)),
     }
 
 

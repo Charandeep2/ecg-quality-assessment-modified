@@ -2,6 +2,11 @@
 Model inference and classification performance evaluation.
 """
 
+import os
+import warnings
+os.environ["LOKY_MAX_CPU_COUNT"] = "4"
+warnings.filterwarnings("ignore")
+
 from pathlib import Path
 from typing import Any, Dict, Optional, Union
 

@@ -16,6 +16,7 @@ from core.config import (
 )
 from core.cwt import create_cwt_tensor, select_cwt_frequency
 from core.data_loader import find_record, load_dataset_ecg
+from core.clustering import predict_signal_condition
 from core.preprocessing import (
     calculate_characteristics,
     high_pass_filter,
@@ -81,9 +82,10 @@ class ECGPipeline:
         Returns:
             Dict containing signal inspection, features, decomposition, error, and predictions.
         """
-        # Step 1: Inspection & Characteristics
+        # Step 1: Inspection, Characteristics, and Physiological Condition Clustering
         lead_inspection_df = inspect_leads(signal)
         characteristics = calculate_characteristics(signal)
+        condition_cluster = predict_signal_condition(characteristics)
 
         # Step 2: Adaptive Preprocessing
         filter_applied = False
@@ -123,6 +125,7 @@ class ECGPipeline:
             "prediction": prediction_result["label"],
             "prediction_class": prediction_result["prediction"],
             "probability_unacceptable": prediction_result["probability_unacceptable"],
+            "condition_cluster": condition_cluster,
             "characteristics": characteristics,
             "lead_inspection": lead_inspection_df,
             "filter_applied": filter_applied,

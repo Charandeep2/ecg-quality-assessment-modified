@@ -126,8 +126,9 @@ def run_inference(user_input: str, adaptive: bool = True):
     flat_leads = lead_df[lead_df["Constant lead"] == True]["Lead"].tolist()
     dropout_leads = lead_df[lead_df["Contains -80 marker"] == True]["Lead"].tolist()
 
-    # 2. Characteristics & Adaptive Preprocessing
+    # 2. 11 Signal Characteristics & Physiological Clustering
     chars = core.calculate_characteristics(signal, fs=fs)
+    cond_cluster = core.predict_signal_condition(chars)
     apply_hp = core.should_apply_highpass(chars) if adaptive else False
     if apply_hp:
         working_signal = core.high_pass_filter(signal, fs=fs)
@@ -161,7 +162,17 @@ def run_inference(user_input: str, adaptive: bool = True):
 
     # Display Result Card
     print("\n" + "─" * 70)
-    print(" 🩺 QUALITY DIAGNOSTIC RESULT")
+    print(" 🩺 QUALITY DIAGNOSTIC RESULT & PHYSIOLOGICAL CONDITION")
+    print("─" * 70)
+
+    # Physiological Condition Cluster
+    c_name = cond_cluster["name"]
+    c_risk = cond_cluster["empirical_unacceptable_risk"]
+    c_state = cond_cluster["clinical_state"]
+    print(f"  Signal Group: [Cluster {cond_cluster['cluster_id']}: {c_name}]")
+    print(f"  Group Risk:   {c_risk:.1f}% Empirical Unacceptable Rate in Research Cohort")
+    print(f"  Condition:    {c_state}")
+    print(f"  Grid Noise:   Mains 50/60 Hz Powerline Ratio = {chars.get('mean_powerline_ratio', 0.0):.6f}")
     print("─" * 70)
 
     if pred_label == "Acceptable":
