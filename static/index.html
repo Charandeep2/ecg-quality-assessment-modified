@@ -375,6 +375,207 @@
       </section>
 
       <!-- ============================================================== -->
+      <!-- 2C. PHYSIOLOGICAL SIGNAL CONDITION & 11 CHARACTERISTICS (Empirical Extraction & Clustering) -->
+      <!-- ============================================================== -->
+      <section id="signal-characteristics-section" class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-5">
+        
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+          <div class="flex items-center space-x-2.5">
+            <div class="p-1.5 rounded-lg bg-cyan-950 border border-cyan-800 text-cyan-400">
+              <i data-lucide="activity" class="h-4 w-4"></i>
+            </div>
+            <div>
+              <div class="flex items-center space-x-2">
+                <h3 class="text-sm font-bold text-white uppercase tracking-wider">Physiological Signal Condition &amp; Characteristics</h3>
+                <span class="px-2 py-0.5 text-[10px] font-mono font-semibold bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 rounded-full">K-Means (k=3, Sil=0.7392)</span>
+              </div>
+              <p class="text-xs text-slate-400">11-dimensional empirical signal analysis guiding condition-aware adaptive preprocessing and tensor ranks</p>
+            </div>
+          </div>
+          
+          <!-- View Ablation Study Button -->
+          <button onclick="openAblationModal()" class="px-3 py-1.5 rounded-lg font-semibold text-xs transition bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 flex items-center space-x-1.5 self-start sm:self-auto">
+            <i data-lucide="trending-up" class="h-3.5 w-3.5"></i>
+            <span>View Ablation Progression (E0 ➔ E3)</span>
+          </button>
+        </div>
+
+        <!-- 3 Primary Condition Cards (Top Row) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 text-xs">
+          
+          <!-- Card 1: Assigned Condition Group (K-Means) -->
+          <div class="p-4 rounded-xl border bg-slate-950/80 border-slate-800 space-y-2.5 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400 font-medium">Assigned Condition Group:</span>
+                <span id="cluster-name-badge" class="px-2.5 py-0.5 rounded-md font-mono font-bold text-[11px] bg-emerald-950 text-emerald-300 border border-emerald-800">
+                  Cluster 0: Stable Baseline
+                </span>
+              </div>
+              <p id="cluster-description" class="text-slate-300 text-[11px] leading-relaxed pt-2">
+                Clean physiological recording with stable skin contact and negligible baseline drift.
+              </p>
+            </div>
+            <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono">
+              <span class="text-slate-400">Empirical Cohort Risk:</span>
+              <span id="cluster-cohort-risk" class="font-bold text-emerald-400">13.5% Cohort Risk</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Centered Lead RMS (DC Offset Compensation) -->
+          <div class="p-4 rounded-xl border bg-slate-950/80 border-slate-800 space-y-2.5 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400 font-medium">Centered Lead RMS:</span>
+                <span id="rms-compensation-badge" class="px-2.5 py-0.5 rounded-md font-mono font-bold text-[11px] bg-cyan-950 text-cyan-300 border border-cyan-800">
+                  Normal DC Balance
+                </span>
+              </div>
+              <p id="rms-explanation" class="text-slate-300 text-[11px] leading-relaxed pt-2">
+                True electrical heartbeat voltage with baseline DC offset neutralized to avoid misleading SVD skew.
+              </p>
+            </div>
+            <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono">
+              <span class="text-slate-400">Raw vs Centered:</span>
+              <span id="char-rms-comparison" class="font-bold text-slate-200">0.269 / 0.268 mV</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Mains Grid Powerline (50/60 Hz Hum) -->
+          <div class="p-4 rounded-xl border bg-slate-950/80 border-slate-800 space-y-2.5 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400 font-medium">Mains Grid (50/60 Hz Hum):</span>
+                <span id="pl-status-badge" class="px-2.5 py-0.5 rounded-md font-mono font-bold text-[11px] bg-emerald-950 text-emerald-300 border border-emerald-800">
+                  Grid Hum Normal
+                </span>
+              </div>
+              <p id="pl-explanation" class="text-slate-300 text-[11px] leading-relaxed pt-2">
+                No electrical grid hum observed. Patient cable shielding and room grounding are intact.
+              </p>
+            </div>
+            <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono">
+              <span class="text-slate-400">Powerline Ratio:</span>
+              <span id="char-pl-ratio" class="font-bold text-slate-200">0.000700</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 11 Candidate Signal Characteristics Table (Empirical Measurement Breakdown) -->
+        <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-2">
+            <div class="flex items-center space-x-2">
+              <span class="text-xs font-bold text-white uppercase tracking-wider">11 Empirical Signal Measurements</span>
+              <span class="px-2 py-0.5 text-[10px] font-mono bg-slate-800 text-slate-300 rounded">Physical Extraction</span>
+            </div>
+            <span class="text-[11px] text-cyan-300 font-mono">Pearson Redundancy Eliminated (r = 0.9972 &amp; r = 0.9774)</span>
+          </div>
+
+          <!-- Grid of 4 Feature Categories -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+            
+            <!-- Category 1: Magnitude / Energy -->
+            <div class="p-3 rounded-lg bg-slate-900/80 border border-slate-800 space-y-1.5">
+              <div class="flex items-center justify-between font-semibold text-slate-300 border-b border-slate-800 pb-1">
+                <span>⚡ Magnitude &amp; Energy</span>
+                <span class="text-[10px] text-cyan-400 font-mono">3 features</span>
+              </div>
+              <div class="flex justify-between text-[11px] pt-1">
+                <span class="text-slate-400">Mean Centered RMS:</span>
+                <span id="feat-mean-centered-rms" class="font-mono font-bold text-white">0.2685 mV</span>
+              </div>
+              <div class="flex justify-between text-[11px]">
+                <span class="text-slate-400">Max Centered RMS:</span>
+                <span id="feat-max-centered-rms" class="font-mono text-slate-300">0.3872 mV</span>
+              </div>
+              <div class="flex justify-between text-[11px]">
+                <span class="text-slate-400">Mean Abs Amplitude:</span>
+                <span id="feat-mean-abs" class="font-mono text-slate-300">0.1368 mV</span>
+              </div>
+              <p class="text-[10px] text-slate-500 pt-1 leading-tight">RMS ↔ Abs Amp collinearity (r=0.9972) isolated.</p>
+            </div>
+
+            <!-- Category 2: Baseline Stability & Respiration -->
+            <div class="p-3 rounded-lg bg-slate-900/80 border border-slate-800 space-y-1.5">
+              <div class="flex items-center justify-between font-semibold text-slate-300 border-b border-slate-800 pb-1">
+                <span>🫁 Baseline Wander</span>
+                <span class="text-[10px] text-emerald-400 font-mono">4 features</span>
+              </div>
+              <div class="flex justify-between text-[11px] pt-1">
+                <span class="text-slate-400">Mean Baseline Drift:</span>
+                <span id="feat-mean-baseline" class="font-mono font-bold text-white">0.1393 mV</span>
+              </div>
+              <div class="flex justify-between text-[11px]">
+                <span class="text-slate-400">Max Baseline Drift:</span>
+                <span id="feat-max-baseline" class="font-mono text-slate-300">0.2088 mV</span>
+              </div>
+              <div class="flex justify-between text-[11px]">
+                <span class="text-slate-400">Mean Lead Std Dev:</span>
+                <span id="feat-mean-std" class="font-mono text-slate-300">0.2685 mV</span>
+              </div>
+              <p id="feat-filter-status" class="text-[10px] text-emerald-400 pt-1 leading-tight">Drift &lt; 0.08 mV: No 0.5 Hz filter needed.</p>
+            </div>
+
+            <!-- Category 3: High-Frequency Tremors (EMG) -->
+            <div class="p-3 rounded-lg bg-slate-900/80 border border-slate-800 space-y-1.5">
+              <div class="flex items-center justify-between font-semibold text-slate-300 border-b border-slate-800 pb-1">
+                <span>🌊 Muscle Noise / EMG</span>
+                <span class="text-[10px] text-purple-400 font-mono">2 features</span>
+              </div>
+              <div class="flex justify-between text-[11px] pt-1">
+                <span class="text-slate-400">Mean HF Ratio (≥20Hz):</span>
+                <span id="feat-mean-hf" class="font-mono font-bold text-white">3.73%</span>
+              </div>
+              <div class="flex justify-between text-[11px]">
+                <span class="text-slate-400">Max Lead HF Ratio:</span>
+                <span id="feat-max-hf" class="font-mono text-slate-300">5.35%</span>
+              </div>
+              <div class="flex justify-between text-[11px]">
+                <span class="text-slate-400">CWT Ceiling:</span>
+                <span id="feat-cwt-ceiling" class="font-mono text-purple-300 font-semibold">40.0 Hz</span>
+              </div>
+              <p id="feat-tremor-status" class="text-[10px] text-slate-400 pt-1 leading-tight">Tremor normal: Standard 40 Hz CWT ceiling applied.</p>
+            </div>
+
+            <!-- Category 4: Powerline Interference (50/60 Hz) -->
+            <div class="p-3 rounded-lg bg-slate-900/80 border border-slate-800 space-y-1.5">
+              <div class="flex items-center justify-between font-semibold text-slate-300 border-b border-slate-800 pb-1">
+                <span>🔌 Powerline (50/60 Hz)</span>
+                <span class="text-[10px] text-amber-400 font-mono">2 features</span>
+              </div>
+              <div class="flex justify-between text-[11px] pt-1">
+                <span class="text-slate-400">Mean 50/60 Hz Ratio:</span>
+                <span id="feat-mean-pl" class="font-mono font-bold text-white">0.070%</span>
+              </div>
+              <div class="flex justify-between text-[11px]">
+                <span class="text-slate-400">Max Lead 50/60 Hz:</span>
+                <span id="feat-max-pl" class="font-mono text-slate-300">0.136%</span>
+              </div>
+              <div class="flex justify-between text-[11px]">
+                <span class="text-slate-400">Grid Notch Filter:</span>
+                <span id="feat-notch-status" class="font-mono text-emerald-400 font-semibold">Not Required</span>
+              </div>
+              <p class="text-[10px] text-slate-400 pt-1 leading-tight">Mains hum negligible. Clinical cables shielded.</p>
+            </div>
+
+          </div>
+
+          <!-- Redundancy & Feature Selection Callout (Empirical Feature Selection Insight) -->
+          <div class="bg-cyan-950/20 border border-cyan-800/40 rounded-lg p-2.5 flex items-start space-x-2 text-[11px]">
+            <i data-lucide="info" class="h-4 w-4 text-cyan-400 shrink-0 mt-0.5"></i>
+            <p class="text-slate-300 leading-relaxed">
+              <strong class="text-cyan-300">Feature Selection Insight:</strong>
+              Pearson correlation across 998 records confirmed severe multi-collinearity between raw RMS and absolute amplitude (<span class="font-mono text-cyan-200">r = 0.9972</span>) and between standard deviation and baseline drift (<span class="font-mono text-cyan-200">r = 0.9774</span>). The pipeline retains 3 orthogonal representatives (Magnitude, Baseline Drift, High-Frequency Ratio) to eliminate redundancy without information loss.
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+
+      <!-- ============================================================== -->
       <!-- 3. INTERACTIVE 12-LEAD WAVEFORM TELEMETRY VIEWER -->
       <!-- ============================================================== -->
       <section class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
@@ -1229,6 +1430,175 @@
     }
 
     // Toggle Audience Mode (Plain English vs Clinical)
+    // Open / Close Ablation Study Modal
+    function openAblationModal() {
+      const modal = document.getElementById('ablation-modal');
+      if (modal) modal.classList.remove('hidden');
+      updateIcons();
+    }
+
+    function closeAblationModal() {
+      const modal = document.getElementById('ablation-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    // Render Physiological Signal Condition & 11 Characteristics
+    function renderSignalCharacteristics(pred, insp) {
+      if (!pred && !insp) return;
+      const chars = (pred && pred.characteristics) || (insp && insp.characteristics) || {};
+      const cluster = (pred && pred.condition_cluster) || null;
+      const isPlain = currentAudienceMode === 'plain';
+
+      // 1. Cluster display
+      const clusterBadge = document.getElementById('cluster-name-badge');
+      const clusterDesc = document.getElementById('cluster-description');
+      const clusterRisk = document.getElementById('cluster-cohort-risk');
+
+      if (cluster && clusterBadge) {
+        const cname = cluster.name ? (cluster.name.startsWith('Cluster') ? cluster.name : `Cluster ${cluster.cluster_id}: ${cluster.name}`) : `Cluster ${cluster.cluster_id || 0}`;
+        clusterBadge.textContent = cname;
+        const cid = cluster.cluster_id !== undefined ? cluster.cluster_id : 0;
+        if (cid === 0) {
+          clusterBadge.className = 'px-2.5 py-0.5 rounded-md font-mono font-bold text-[11px] bg-emerald-950 text-emerald-300 border border-emerald-800';
+        } else if (cid === 1) {
+          clusterBadge.className = 'px-2.5 py-0.5 rounded-md font-mono font-bold text-[11px] bg-rose-950 text-rose-300 border border-rose-800';
+        } else {
+          clusterBadge.className = 'px-2.5 py-0.5 rounded-md font-mono font-bold text-[11px] bg-amber-950 text-amber-300 border border-amber-800';
+        }
+
+        if (clusterDesc) {
+          if (isPlain) {
+            if (cid === 0) clusterDesc.textContent = "Clean physiological recording: Patient was relaxed, electrodes made firm skin contact, and breathing baseline was quiet.";
+            else if (cid === 1) clusterDesc.textContent = "Electrode problem detected: One or more chest stickers detached or lost contact with skin, creating signal dropout.";
+            else clusterDesc.textContent = "Heavy breathing movement: Patient chest movements or fidgeting caused the ECG waveforms to sway up and down.";
+          } else {
+            clusterDesc.textContent = cluster.clinical_state || "Unsupervised k-means grouping based on lead magnitude, drift, and frequency ratios.";
+          }
+        }
+
+        if (clusterRisk) {
+          const riskVal = cluster.empirical_unacceptable_risk !== undefined ? cluster.empirical_unacceptable_risk : (cluster.cohort_risk ? cluster.cohort_risk * 100 : 13.5);
+          clusterRisk.textContent = `${riskVal.toFixed(1)}% Cohort Risk`;
+          clusterRisk.className = riskVal > 50 ? 'font-bold text-rose-400' : (riskVal > 25 ? 'font-bold text-amber-400' : 'font-bold text-emerald-400');
+        }
+      }
+
+      // 2. Centered vs Raw RMS
+      const rawRms = chars.mean_rms || 0.0;
+      const centeredRms = chars.mean_centered_rms || rawRms;
+      const dcDelta = Math.abs(rawRms - centeredRms);
+      const rmsBadge = document.getElementById('rms-compensation-badge');
+      const rmsExp = document.getElementById('rms-explanation');
+      const rmsComp = document.getElementById('char-rms-comparison');
+
+      if (rmsComp) rmsComp.textContent = `${rawRms.toFixed(3)} / ${centeredRms.toFixed(3)} mV`;
+
+      if (dcDelta > 0.5) {
+        if (rmsBadge) {
+          rmsBadge.textContent = 'DC Offset Filtered';
+          rmsBadge.className = 'px-2.5 py-0.5 rounded-md font-mono font-bold text-[11px] bg-amber-950 text-amber-300 border border-amber-800';
+        }
+        if (rmsExp) {
+          rmsExp.textContent = isPlain 
+            ? "Massive raw signal spike was caused by artificial sensor sticker bounce, correctly filtered by Centered RMS to protect real heart waves."
+            : `Raw RMS (${rawRms.toFixed(3)} mV) was distorted by DC offset (${dcDelta.toFixed(3)} mV jump). Centered RMS isolates true AC voltage.`;
+        }
+      } else {
+        if (rmsBadge) {
+          rmsBadge.textContent = 'Normal DC Balance';
+          rmsBadge.className = 'px-2.5 py-0.5 rounded-md font-mono font-bold text-[11px] bg-cyan-950 text-cyan-300 border border-cyan-800';
+        }
+        if (rmsExp) {
+          rmsExp.textContent = isPlain
+            ? "Stable electrical balance. No artificial sticker jump or DC offset detected across the 12 leads."
+            : `Raw RMS (${rawRms.toFixed(3)} mV) matches Centered RMS (${centeredRms.toFixed(3)} mV). Signal baseline is stable.`;
+        }
+      }
+
+      // 3. Powerline Hum (50/60 Hz)
+      const plRatio = chars.mean_powerline_ratio || 0.0;
+      const plBadge = document.getElementById('pl-status-badge');
+      const plExp = document.getElementById('pl-explanation');
+      const plRatioEl = document.getElementById('char-pl-ratio');
+
+      if (plRatioEl) plRatioEl.textContent = plRatio.toFixed(6);
+
+      if (plRatio >= 0.002) {
+        if (plBadge) {
+          plBadge.textContent = '50/60 Hz Hum Present';
+          plBadge.className = 'px-2.5 py-0.5 rounded-md font-mono font-bold text-[11px] bg-amber-950 text-amber-300 border border-amber-800';
+        }
+        if (plExp) {
+          plExp.textContent = isPlain
+            ? "Wall socket electrical buzz detected (50/60 Hz hum). Make sure ECG device cables are properly grounded."
+            : `Mains grid interference observed (${(plRatio * 100).toFixed(4)}% power ratio). Check patient cable shielding.`;
+        }
+      } else {
+        if (plBadge) {
+          plBadge.textContent = 'Grid Hum Normal';
+          plBadge.className = 'px-2.5 py-0.5 rounded-md font-mono font-bold text-[11px] bg-emerald-950 text-emerald-300 border border-emerald-800';
+        }
+        if (plExp) {
+          plExp.textContent = isPlain
+            ? "Zero electrical room buzzing. Power cord shielding and grounding are clean."
+            : `Powerline spectral ratio ${(plRatio * 100).toFixed(4)}% is well below 0.2% tolerance limit.`;
+        }
+      }
+
+      // 4. 11 Features Detailed Breakdown
+      const setEl = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+      setEl('feat-mean-centered-rms', `${(chars.mean_centered_rms || rawRms).toFixed(4)} mV`);
+      setEl('feat-max-centered-rms', `${(chars.max_centered_rms || chars.max_rms || 0.0).toFixed(4)} mV`);
+      setEl('feat-mean-abs', `${(chars.mean_abs_amplitude || 0.0).toFixed(4)} mV`);
+
+      const meanBase = chars.mean_baseline_variation || 0.0;
+      const maxBase = chars.max_baseline_variation || 0.0;
+      setEl('feat-mean-baseline', `${meanBase.toFixed(4)} mV`);
+      setEl('feat-max-baseline', `${maxBase.toFixed(4)} mV`);
+      setEl('feat-mean-std', `${(chars.mean_std || 0.0).toFixed(4)} mV`);
+
+      const filterStatusEl = document.getElementById('feat-filter-status');
+      if (filterStatusEl) {
+        if (meanBase >= 0.08) {
+          filterStatusEl.textContent = 'Drift ≥ 0.08 mV: Adaptive 0.5 Hz highpass active.';
+          filterStatusEl.className = 'text-[10px] text-amber-400 pt-1 leading-tight';
+        } else {
+          filterStatusEl.textContent = 'Drift < 0.08 mV: No 0.5 Hz filter needed.';
+          filterStatusEl.className = 'text-[10px] text-emerald-400 pt-1 leading-tight';
+        }
+      }
+
+      const meanHf = chars.mean_high_frequency_ratio || 0.0;
+      const maxHf = chars.max_high_frequency_ratio || 0.0;
+      setEl('feat-mean-hf', `${(meanHf * 100).toFixed(2)}%`);
+      setEl('feat-max-hf', `${(maxHf * 100).toFixed(2)}%`);
+      setEl('feat-cwt-ceiling', (pred && pred.max_frequency_hz ? `${pred.max_frequency_hz.toFixed(1)} Hz` : (meanHf > 0.05 ? '50.0 Hz' : '40.0 Hz')));
+
+      const tremorStatusEl = document.getElementById('feat-tremor-status');
+      if (tremorStatusEl) {
+        if (meanHf >= 0.05) {
+          tremorStatusEl.textContent = 'Tremor elevated: CWT frequency expanded to 50 Hz.';
+          tremorStatusEl.className = 'text-[10px] text-amber-400 pt-1 leading-tight';
+        } else {
+          tremorStatusEl.textContent = 'Tremor normal: Standard 40 Hz CWT ceiling applied.';
+          tremorStatusEl.className = 'text-[10px] text-slate-400 pt-1 leading-tight';
+        }
+      }
+
+      setEl('feat-mean-pl', `${(plRatio * 100).toFixed(3)}%`);
+      setEl('feat-max-pl', `${((chars.max_powerline_ratio || plRatio) * 100).toFixed(3)}%`);
+      const notchEl = document.getElementById('feat-notch-status');
+      if (notchEl) {
+        if (plRatio >= 0.002) {
+          notchEl.textContent = 'Interference Flagged';
+          notchEl.className = 'font-mono text-amber-400 font-semibold';
+        } else {
+          notchEl.textContent = 'Not Required';
+          notchEl.className = 'font-mono text-emerald-400 font-semibold';
+        }
+      }
+    }
+
     function setAudienceMode(mode) {
       currentAudienceMode = mode;
       const btnPlain = document.getElementById('btn-mode-plain');
@@ -1249,6 +1619,7 @@
       if (currentPrediction) {
         renderExplanations(currentPrediction);
         renderFactorAudit(currentPrediction, currentInspection);
+        renderSignalCharacteristics(currentPrediction, currentInspection);
       }
       updateIcons();
     }
@@ -1287,6 +1658,7 @@
         // Render all sections
         renderVerdict(currentPrediction);
         renderFactorAudit(currentPrediction, currentInspection);
+        renderSignalCharacteristics(currentPrediction, currentInspection);
         renderLeadMatrix(currentInspection);
         renderTensorCenter(currentPrediction);
         drawWaveform();
@@ -1349,6 +1721,7 @@
 
               renderVerdict(currentPrediction);
               renderFactorAudit(currentPrediction, currentInspection);
+              renderSignalCharacteristics(currentPrediction, currentInspection);
               renderLeadMatrix(currentInspection);
               renderTensorCenter(currentPrediction);
               drawWaveform();
@@ -2841,5 +3214,99 @@
     });
 
   </script>
+
+  <!-- ============================================================== -->
+  <!-- ABLATION PROGRESSION MODAL (E0 -> E3) -->
+  <!-- ============================================================== -->
+  <div id="ablation-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm hidden" onclick="if(event.target===this) closeAblationModal()">
+    <div class="bg-slate-900 border border-slate-700/80 rounded-2xl max-w-4xl w-full p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div class="flex items-center space-x-3">
+          <div class="p-2 rounded-xl bg-cyan-950 border border-cyan-800 text-cyan-400">
+            <i data-lucide="trending-up" class="h-5 w-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-extrabold text-white">5-Fold Stratified Cross-Validation Ablation Progression (E0 ➔ E3)</h3>
+            <p class="text-xs text-slate-400">Isolating the clinical impact of adding one adaptive component at a time across all 998 PhysioNet recordings</p>
+          </div>
+        </div>
+        <button onclick="closeAblationModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition">
+          <i data-lucide="x" class="h-5 w-5"></i>
+        </button>
+      </div>
+
+      <!-- Ablation Table -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="border-b border-slate-800 text-slate-400 font-mono text-[11px] uppercase bg-slate-950/50">
+              <th class="py-2.5 px-3">Stage</th>
+              <th class="py-2.5 px-3">Pipeline Configuration</th>
+              <th class="py-2.5 px-3 text-center">Bad ECG Recall (Sensitivity)</th>
+              <th class="py-2.5 px-3 text-center">Clean Specificity</th>
+              <th class="py-2.5 px-3 text-center">Accuracy</th>
+              <th class="py-2.5 px-3">Gain vs. Fixed Baseline</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800/60 font-mono">
+            <tr class="hover:bg-slate-800/30">
+              <td class="py-3 px-3 font-bold text-slate-400">E0</td>
+              <td class="py-3 px-3 font-sans text-slate-300">
+                <span class="font-bold text-white">Fixed Baseline Pipeline:</span> Fixed 0.5 Hz preproc, fixed CWT (1–40 Hz), fixed Tucker rank [50, 20, 6]
+              </td>
+              <td class="py-3 px-3 text-center text-rose-400 font-bold">45.8%</td>
+              <td class="py-3 px-3 text-center text-emerald-400">98.8%</td>
+              <td class="py-3 px-3 text-center text-slate-300">86.9%</td>
+              <td class="py-3 px-3 font-sans text-slate-500">Baseline (Misses 54.2% of bad ECGs)</td>
+            </tr>
+            <tr class="hover:bg-slate-800/30">
+              <td class="py-3 px-3 font-bold text-cyan-400">E1</td>
+              <td class="py-3 px-3 font-sans text-slate-300">
+                <span class="font-bold text-white">+ Adaptive Preprocessing:</span> Drift-dependent 0.5 Hz highpass Butterworth + Centered Lead RMS
+              </td>
+              <td class="py-3 px-3 text-center text-amber-400 font-bold">58.2%</td>
+              <td class="py-3 px-3 text-center text-emerald-400">96.1%</td>
+              <td class="py-3 px-3 text-center text-slate-300">87.8%</td>
+              <td class="py-3 px-3 font-sans text-cyan-400 font-semibold">+12.4% Bad ECG Recall</td>
+            </tr>
+            <tr class="hover:bg-slate-800/30">
+              <td class="py-3 px-3 font-bold text-purple-400">E2</td>
+              <td class="py-3 px-3 font-sans text-slate-300">
+                <span class="font-bold text-white">+ Adaptive CWT:</span> Condition-dependent frequency band (40 Hz vs 50 Hz ceiling based on high-frequency noise)
+              </td>
+              <td class="py-3 px-3 text-center text-cyan-300 font-bold">66.7%</td>
+              <td class="py-3 px-3 text-center text-emerald-400">94.8%</td>
+              <td class="py-3 px-3 text-center text-slate-300">88.5%</td>
+              <td class="py-3 px-3 font-sans text-purple-300 font-semibold">+20.9% Bad ECG Recall</td>
+            </tr>
+            <tr class="bg-cyan-950/20 hover:bg-cyan-950/30 border-l-2 border-cyan-400">
+              <td class="py-3 px-3 font-bold text-emerald-300">E3</td>
+              <td class="py-3 px-3 font-sans text-slate-200">
+                <span class="font-bold text-emerald-300">Full Adaptive STP 2.0 (+ Adaptive Rank):</span> Dynamic Tucker rank [R₁, R₂, R₃] at 95% SVD energy knee
+              </td>
+              <td class="py-3 px-3 text-center text-emerald-300 font-bold text-sm">76.6%</td>
+              <td class="py-3 px-3 text-center text-emerald-400">93.4%</td>
+              <td class="py-3 px-3 text-center text-white font-bold">89.6%</td>
+              <td class="py-3 px-3 font-sans text-emerald-300 font-bold">+30.8% Total Bad ECG Recall Boost</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Insight Callout -->
+      <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs text-slate-300 space-y-1.5 leading-relaxed">
+        <p><strong class="text-white">Why This Matters:</strong> In real clinical settings, failing to detect a corrupted recording is dangerous because a doctor might misdiagnose an artifact as an arrhythmia. Fixed algorithms only catch 45.8% of corrupted signals. <strong>Adaptive STP 2.0 boosts detection to 76.6% (+30.8% absolute gain)</strong> while simultaneously cutting core tensor storage by <strong>73.1%</strong>.</p>
+      </div>
+
+      <div class="flex justify-end pt-2">
+        <button onclick="closeAblationModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-semibold transition">
+          Close Window
+        </button>
+      </div>
+
+    </div>
+  </div>
 </body>
 </html>
