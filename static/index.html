@@ -377,6 +377,9 @@
       <!-- ============================================================== -->
       <!-- 2C. PHYSIOLOGICAL SIGNAL CONDITION & 11 CHARACTERISTICS (Empirical Extraction & Clustering) -->
       <!-- ============================================================== -->
+      <!-- ============================================================== -->
+      <!-- 2C. PHYSIOLOGICAL SIGNAL CONDITION & 11 CHARACTERISTICS (Empirical Extraction & Clustering) -->
+      <!-- ============================================================== -->
       <section id="signal-characteristics-section" class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-5">
         
         <!-- Header -->
@@ -387,10 +390,10 @@
             </div>
             <div>
               <div class="flex items-center space-x-2">
-                <h3 class="text-sm font-bold text-white uppercase tracking-wider">Physiological Signal Condition &amp; Characteristics</h3>
-                <span class="px-2 py-0.5 text-[10px] font-mono font-semibold bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 rounded-full">K-Means (k=3, Sil=0.7392)</span>
+                <h3 id="signal-main-title" class="text-sm font-bold text-white uppercase tracking-wider">Patient Signal State &amp; Vital Quality Checks</h3>
+                <span id="signal-cluster-badge-top" class="px-2 py-0.5 text-[10px] font-mono font-semibold bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 rounded-full">K-Means (k=3, Sil=0.7392)</span>
               </div>
-              <p class="text-xs text-slate-400">11-dimensional empirical signal analysis guiding condition-aware adaptive preprocessing and tensor ranks</p>
+              <p id="signal-main-subtitle" class="text-xs text-slate-400">Tested across all 12 chest &amp; limb electrodes to ensure safe interpretation</p>
             </div>
           </div>
           
@@ -408,18 +411,18 @@
           <div class="p-4 rounded-xl border bg-slate-950/80 border-slate-800 space-y-2.5 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between">
-                <span class="text-slate-400 font-medium">Assigned Condition Group:</span>
+                <span class="text-slate-400 font-medium">Patient Physical Condition:</span>
                 <span id="cluster-name-badge" class="px-2.5 py-0.5 rounded-md font-mono font-bold text-[11px] bg-emerald-950 text-emerald-300 border border-emerald-800">
                   Cluster 0: Stable Baseline
                 </span>
               </div>
               <p id="cluster-description" class="text-slate-300 text-[11px] leading-relaxed pt-2">
-                Clean physiological recording with stable skin contact and negligible baseline drift.
+                Clean recording: Patient was relaxed, electrodes made firm skin contact, and breathing baseline was quiet.
               </p>
             </div>
             <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono">
-              <span class="text-slate-400">Empirical Cohort Risk:</span>
-              <span id="cluster-cohort-risk" class="font-bold text-emerald-400">13.5% Cohort Risk</span>
+              <span class="text-slate-400">Condition Cohort Risk:</span>
+              <span id="cluster-cohort-risk" class="font-bold text-emerald-400">13.5% Risk</span>
             </div>
           </div>
 
@@ -427,17 +430,17 @@
           <div class="p-4 rounded-xl border bg-slate-950/80 border-slate-800 space-y-2.5 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between">
-                <span class="text-slate-400 font-medium">Centered Lead RMS:</span>
+                <span class="text-slate-400 font-medium">Sensor Contact Voltage:</span>
                 <span id="rms-compensation-badge" class="px-2.5 py-0.5 rounded-md font-mono font-bold text-[11px] bg-cyan-950 text-cyan-300 border border-cyan-800">
                   Normal DC Balance
                 </span>
               </div>
               <p id="rms-explanation" class="text-slate-300 text-[11px] leading-relaxed pt-2">
-                True electrical heartbeat voltage with baseline DC offset neutralized to avoid misleading SVD skew.
+                True heartbeat electrical waves with baseline jumps safely neutralized so the doctor sees natural heart rhythm.
               </p>
             </div>
             <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono">
-              <span class="text-slate-400">Raw vs Centered:</span>
+              <span class="text-slate-400">Raw vs Filtered:</span>
               <span id="char-rms-comparison" class="font-bold text-slate-200">0.269 / 0.268 mV</span>
             </div>
           </div>
@@ -446,130 +449,229 @@
           <div class="p-4 rounded-xl border bg-slate-950/80 border-slate-800 space-y-2.5 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between">
-                <span class="text-slate-400 font-medium">Mains Grid (50/60 Hz Hum):</span>
+                <span class="text-slate-400 font-medium">Wall Plug Electrical Buzz:</span>
                 <span id="pl-status-badge" class="px-2.5 py-0.5 rounded-md font-mono font-bold text-[11px] bg-emerald-950 text-emerald-300 border border-emerald-800">
-                  Grid Hum Normal
+                  Clean Grounding (No Buzz)
                 </span>
               </div>
               <p id="pl-explanation" class="text-slate-300 text-[11px] leading-relaxed pt-2">
-                No electrical grid hum observed. Patient cable shielding and room grounding are intact.
+                Zero electrical buzzing leaking in from room wall plugs. Cables and wire grounding are intact.
               </p>
             </div>
             <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono">
-              <span class="text-slate-400">Powerline Ratio:</span>
-              <span id="char-pl-ratio" class="font-bold text-slate-200">0.000700</span>
+              <span class="text-slate-400">Electrical Hum Ratio:</span>
+              <span id="char-pl-ratio" class="font-bold text-slate-200">0.070% (Quiet)</span>
             </div>
           </div>
 
         </div>
 
-        <!-- 11 Candidate Signal Characteristics Table (Empirical Measurement Breakdown) -->
-        <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800 space-y-3">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-2">
+        <!-- 4 ESSENTIAL WIRE & SIGNAL HEALTH TESTS (Redesigned for 100% Understandability) -->
+        <div class="bg-slate-950/80 p-4 sm:p-5 rounded-xl border border-slate-800 space-y-4">
+          
+          <!-- Box Header -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
             <div class="flex items-center space-x-2">
-              <span class="text-xs font-bold text-white uppercase tracking-wider">11 Empirical Signal Measurements</span>
-              <span class="px-2 py-0.5 text-[10px] font-mono bg-slate-800 text-slate-300 rounded">Physical Extraction</span>
+              <span id="tests-box-title" class="text-xs font-bold text-white uppercase tracking-wider">4 Essential Signal Health Checks</span>
+              <span id="tests-box-badge" class="px-2 py-0.5 text-[10px] font-semibold bg-cyan-950 text-cyan-300 border border-cyan-800/80 rounded">Plain English Diagnostics</span>
             </div>
-            <span class="text-[11px] text-cyan-300 font-mono">Pearson Redundancy Eliminated (r = 0.9972 &amp; r = 0.9774)</span>
+            <span id="tests-box-note" class="text-[11px] text-cyan-400 font-medium">Everyday language • Zero confusing math</span>
           </div>
 
-          <!-- Grid of 4 Feature Categories -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+          <!-- 4 Crystal-Clear Cards Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 text-xs">
             
-            <!-- Category 1: Magnitude / Energy -->
-            <div class="p-3 rounded-lg bg-slate-900/80 border border-slate-800 space-y-1.5">
-              <div class="flex items-center justify-between font-semibold text-slate-300 border-b border-slate-800 pb-1">
-                <span>⚡ Magnitude &amp; Energy</span>
-                <span class="text-[10px] text-cyan-400 font-mono">3 features</span>
+            <!-- Card 1: Heartbeat Signal Strength -->
+            <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-3 flex flex-col justify-between">
+              <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                  <span id="card1-title" class="font-bold text-slate-200 flex items-center space-x-1.5">
+                    <span>⚡ Heartbeat Strength</span>
+                  </span>
+                  <span id="card1-status-pill" class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-800">
+                    Normal Pulse
+                  </span>
+                </div>
+
+                <!-- Primary Number & Target Benchmark -->
+                <div class="pt-1">
+                  <div class="flex items-baseline justify-between font-mono">
+                    <span id="card1-label" class="text-slate-400 text-[11px]">Signal Power:</span>
+                    <span id="card1-hero-val" class="text-base font-extrabold text-white">0.269 mV</span>
+                  </div>
+                  <span id="card1-benchmark" class="text-[10px] text-slate-400 block pt-0.5">Healthy Heart: 0.15 – 0.50 mV</span>
+                </div>
+
+                <!-- Visual Bar Indicator -->
+                <div class="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden p-0.5 border border-slate-800">
+                  <div id="card1-bar" class="h-full rounded-full bg-emerald-400 transition-all duration-500" style="width: 54%"></div>
+                </div>
+
+                <!-- Simple Explanation -->
+                <p id="card1-explain" class="text-[11px] text-slate-300 leading-snug pt-1">
+                  The heart's electrical pumping waves are clear, strong, and easy for the computer to read.
+                </p>
               </div>
-              <div class="flex justify-between text-[11px] pt-1">
-                <span class="text-slate-400">Mean Centered RMS:</span>
-                <span id="feat-mean-centered-rms" class="font-mono font-bold text-white">0.2685 mV</span>
+
+              <!-- Technical Details Toggle Footer -->
+              <div class="pt-2 border-t border-slate-800/80 text-[10px] font-mono text-slate-400 flex justify-between">
+                <span>Peak Lead: <span id="feat-max-centered-rms" class="text-slate-200">0.387 mV</span></span>
+                <span>Abs: <span id="feat-mean-abs" class="text-slate-200">0.137 mV</span></span>
               </div>
-              <div class="flex justify-between text-[11px]">
-                <span class="text-slate-400">Max Centered RMS:</span>
-                <span id="feat-max-centered-rms" class="font-mono text-slate-300">0.3872 mV</span>
-              </div>
-              <div class="flex justify-between text-[11px]">
-                <span class="text-slate-400">Mean Abs Amplitude:</span>
-                <span id="feat-mean-abs" class="font-mono text-slate-300">0.1368 mV</span>
-              </div>
-              <p class="text-[10px] text-slate-500 pt-1 leading-tight">RMS ↔ Abs Amp collinearity (r=0.9972) isolated.</p>
             </div>
 
-            <!-- Category 2: Baseline Stability & Respiration -->
-            <div class="p-3 rounded-lg bg-slate-900/80 border border-slate-800 space-y-1.5">
-              <div class="flex items-center justify-between font-semibold text-slate-300 border-b border-slate-800 pb-1">
-                <span>🫁 Baseline Wander</span>
-                <span class="text-[10px] text-emerald-400 font-mono">4 features</span>
+            <!-- Card 2: Patient Breathing & Chest Movement -->
+            <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-3 flex flex-col justify-between">
+              <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                  <span id="card2-title" class="font-bold text-slate-200 flex items-center space-x-1.5">
+                    <span>🫁 Breathing &amp; Sway</span>
+                  </span>
+                  <span id="card2-status-pill" class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-800">
+                    Sway Stabilized
+                  </span>
+                </div>
+
+                <!-- Primary Number & Target Benchmark -->
+                <div class="pt-1">
+                  <div class="flex items-baseline justify-between font-mono">
+                    <span id="card2-label" class="text-slate-400 text-[11px]">Chest Sway:</span>
+                    <span id="card2-hero-val" class="text-base font-extrabold text-amber-300">0.139 mV</span>
+                  </div>
+                  <span id="card2-benchmark" class="text-[10px] text-slate-400 block pt-0.5">Quiet Limit: &lt; 0.08 mV</span>
+                </div>
+
+                <!-- Visual Bar Indicator -->
+                <div class="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden p-0.5 border border-slate-800">
+                  <div id="card2-bar" class="h-full rounded-full bg-amber-400 transition-all duration-500" style="width: 60%"></div>
+                </div>
+
+                <!-- Simple Explanation -->
+                <p id="card2-explain" class="text-[11px] text-slate-300 leading-snug pt-1">
+                  Patient took deep breaths during test. The AI smart stabilizer automatically smoothed the line flat.
+                </p>
               </div>
-              <div class="flex justify-between text-[11px] pt-1">
-                <span class="text-slate-400">Mean Baseline Drift:</span>
-                <span id="feat-mean-baseline" class="font-mono font-bold text-white">0.1393 mV</span>
+
+              <!-- Technical Details Toggle Footer -->
+              <div class="pt-2 border-t border-slate-800/80 text-[10px] font-mono text-slate-400 flex justify-between">
+                <span>Peak Drift: <span id="feat-max-baseline" class="text-slate-200">0.209 mV</span></span>
+                <span id="feat-filter-status" class="text-amber-300">0.5Hz Active</span>
               </div>
-              <div class="flex justify-between text-[11px]">
-                <span class="text-slate-400">Max Baseline Drift:</span>
-                <span id="feat-max-baseline" class="font-mono text-slate-300">0.2088 mV</span>
-              </div>
-              <div class="flex justify-between text-[11px]">
-                <span class="text-slate-400">Mean Lead Std Dev:</span>
-                <span id="feat-mean-std" class="font-mono text-slate-300">0.2685 mV</span>
-              </div>
-              <p id="feat-filter-status" class="text-[10px] text-emerald-400 pt-1 leading-tight">Drift &lt; 0.08 mV: No 0.5 Hz filter needed.</p>
             </div>
 
-            <!-- Category 3: High-Frequency Tremors (EMG) -->
-            <div class="p-3 rounded-lg bg-slate-900/80 border border-slate-800 space-y-1.5">
-              <div class="flex items-center justify-between font-semibold text-slate-300 border-b border-slate-800 pb-1">
-                <span>🌊 Muscle Noise / EMG</span>
-                <span class="text-[10px] text-purple-400 font-mono">2 features</span>
+            <!-- Card 3: Muscle Shivers & Chills -->
+            <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-3 flex flex-col justify-between">
+              <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                  <span id="card3-title" class="font-bold text-slate-200 flex items-center space-x-1.5">
+                    <span>🌊 Muscle Shivering</span>
+                  </span>
+                  <span id="card3-status-pill" class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-800">
+                    Relaxed Muscles
+                  </span>
+                </div>
+
+                <!-- Primary Number & Target Benchmark -->
+                <div class="pt-1">
+                  <div class="flex items-baseline justify-between font-mono">
+                    <span id="card3-label" class="text-slate-400 text-[11px]">Muscle Ripple:</span>
+                    <span id="card3-hero-val" class="text-base font-extrabold text-emerald-300">3.73%</span>
+                  </div>
+                  <span id="card3-benchmark" class="text-[10px] text-slate-400 block pt-0.5">Normal Relaxed: &lt; 5.0%</span>
+                </div>
+
+                <!-- Visual Bar Indicator -->
+                <div class="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden p-0.5 border border-slate-800">
+                  <div id="card3-bar" class="h-full rounded-full bg-emerald-400 transition-all duration-500" style="width: 25%"></div>
+                </div>
+
+                <!-- Simple Explanation -->
+                <p id="card3-explain" class="text-[11px] text-slate-300 leading-snug pt-1">
+                  The patient was calm with relaxed muscles. No cold chills or muscle shivering interfering with the wave.
+                </p>
               </div>
-              <div class="flex justify-between text-[11px] pt-1">
-                <span class="text-slate-400">Mean HF Ratio (≥20Hz):</span>
-                <span id="feat-mean-hf" class="font-mono font-bold text-white">3.73%</span>
+
+              <!-- Technical Details Toggle Footer -->
+              <div class="pt-2 border-t border-slate-800/80 text-[10px] font-mono text-slate-400 flex justify-between">
+                <span>Peak Lead: <span id="feat-max-hf" class="text-slate-200">5.35%</span></span>
+                <span>Band: <span id="feat-cwt-ceiling" class="text-slate-200">40 Hz</span></span>
               </div>
-              <div class="flex justify-between text-[11px]">
-                <span class="text-slate-400">Max Lead HF Ratio:</span>
-                <span id="feat-max-hf" class="font-mono text-slate-300">5.35%</span>
-              </div>
-              <div class="flex justify-between text-[11px]">
-                <span class="text-slate-400">CWT Ceiling:</span>
-                <span id="feat-cwt-ceiling" class="font-mono text-purple-300 font-semibold">40.0 Hz</span>
-              </div>
-              <p id="feat-tremor-status" class="text-[10px] text-slate-400 pt-1 leading-tight">Tremor normal: Standard 40 Hz CWT ceiling applied.</p>
             </div>
 
-            <!-- Category 4: Powerline Interference (50/60 Hz) -->
-            <div class="p-3 rounded-lg bg-slate-900/80 border border-slate-800 space-y-1.5">
-              <div class="flex items-center justify-between font-semibold text-slate-300 border-b border-slate-800 pb-1">
-                <span>🔌 Powerline (50/60 Hz)</span>
-                <span class="text-[10px] text-amber-400 font-mono">2 features</span>
+            <!-- Card 4: Wall Socket Electrical Buzz (50/60 Hz) -->
+            <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-3 flex flex-col justify-between">
+              <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                  <span id="card4-title" class="font-bold text-slate-200 flex items-center space-x-1.5">
+                    <span>🔌 Wall Plug Buzz</span>
+                  </span>
+                  <span id="card4-status-pill" class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-800">
+                    Clean Shielding
+                  </span>
+                </div>
+
+                <!-- Primary Number & Target Benchmark -->
+                <div class="pt-1">
+                  <div class="flex items-baseline justify-between font-mono">
+                    <span id="card4-label" class="text-slate-400 text-[11px]">Electrical Buzz:</span>
+                    <span id="card4-hero-val" class="text-base font-extrabold text-emerald-300">0.070%</span>
+                  </div>
+                  <span id="card4-benchmark" class="text-[10px] text-slate-400 block pt-0.5">Shielded Limit: &lt; 0.20%</span>
+                </div>
+
+                <!-- Visual Bar Indicator -->
+                <div class="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden p-0.5 border border-slate-800">
+                  <div id="card4-bar" class="h-full rounded-full bg-emerald-400 transition-all duration-500" style="width: 14%"></div>
+                </div>
+
+                <!-- Simple Explanation -->
+                <p id="card4-explain" class="text-[11px] text-slate-300 leading-snug pt-1">
+                  Zero electrical buzz leaking in from room wall plugs. Wire shielding and patient grounding are intact.
+                </p>
               </div>
-              <div class="flex justify-between text-[11px] pt-1">
-                <span class="text-slate-400">Mean 50/60 Hz Ratio:</span>
-                <span id="feat-mean-pl" class="font-mono font-bold text-white">0.070%</span>
+
+              <!-- Technical Details Toggle Footer -->
+              <div class="pt-2 border-t border-slate-800/80 text-[10px] font-mono text-slate-400 flex justify-between">
+                <span>Peak Lead: <span id="feat-max-pl" class="text-slate-200">0.136%</span></span>
+                <span id="feat-notch-status" class="text-emerald-400">Clean</span>
               </div>
-              <div class="flex justify-between text-[11px]">
-                <span class="text-slate-400">Max Lead 50/60 Hz:</span>
-                <span id="feat-max-pl" class="font-mono text-slate-300">0.136%</span>
-              </div>
-              <div class="flex justify-between text-[11px]">
-                <span class="text-slate-400">Grid Notch Filter:</span>
-                <span id="feat-notch-status" class="font-mono text-emerald-400 font-semibold">Not Required</span>
-              </div>
-              <p class="text-[10px] text-slate-400 pt-1 leading-tight">Mains hum negligible. Clinical cables shielded.</p>
             </div>
 
           </div>
 
-          <!-- Redundancy & Feature Selection Callout (Empirical Feature Selection Insight) -->
-          <div class="bg-cyan-950/20 border border-cyan-800/40 rounded-lg p-2.5 flex items-start space-x-2 text-[11px]">
-            <i data-lucide="info" class="h-4 w-4 text-cyan-400 shrink-0 mt-0.5"></i>
-            <p class="text-slate-300 leading-relaxed">
-              <strong class="text-cyan-300">Feature Selection Insight:</strong>
-              Pearson correlation across 998 records confirmed severe multi-collinearity between raw RMS and absolute amplitude (<span class="font-mono text-cyan-200">r = 0.9972</span>) and between standard deviation and baseline drift (<span class="font-mono text-cyan-200">r = 0.9774</span>). The pipeline retains 3 orthogonal representatives (Magnitude, Baseline Drift, High-Frequency Ratio) to eliminate redundancy without information loss.
+          <!-- Feature Selection Insight Banner: Plain English & Understandable for Everyone -->
+          <div class="bg-gradient-to-r from-cyan-950/40 via-slate-950 to-slate-900 border border-cyan-800/40 rounded-xl p-4 space-y-2">
+            <div class="flex items-center space-x-2 text-cyan-300">
+              <span class="text-base">💡</span>
+              <h5 id="redundancy-title" class="text-xs font-bold uppercase tracking-wider text-cyan-300">Why We Test These 4 Things (In Plain, Simple Words)</h5>
+            </div>
+            <p id="redundancy-plain-text" class="text-xs text-slate-300 leading-relaxed">
+              When doctors or computers look at an ECG recording, they only need answers to <strong>4 fundamental physical questions</strong>:
             </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 pt-1 text-[11px]">
+              <div class="p-2 rounded-lg bg-slate-900/80 border border-slate-800 space-y-0.5">
+                <span class="font-bold text-white flex items-center space-x-1"><span class="text-cyan-400">1.</span> <span>Heart Voltage</span></span>
+                <p class="text-slate-400">Is the heart's electrical pumping pulse strong and tall enough to diagnose?</p>
+              </div>
+              <div class="p-2 rounded-lg bg-slate-900/80 border border-slate-800 space-y-0.5">
+                <span class="font-bold text-white flex items-center space-x-1"><span class="text-emerald-400">2.</span> <span>Breathing Sway</span></span>
+                <p class="text-slate-400">Is patient breathing making the ECG trace wander up and down?</p>
+              </div>
+              <div class="p-2 rounded-lg bg-slate-900/80 border border-slate-800 space-y-0.5">
+                <span class="font-bold text-white flex items-center space-x-1"><span class="text-purple-400">3.</span> <span>Muscle Shivers</span></span>
+                <p class="text-slate-400">Is the patient cold, trembling, or shivering during recording?</p>
+              </div>
+              <div class="p-2 rounded-lg bg-slate-900/80 border border-slate-800 space-y-0.5">
+                <span class="font-bold text-white flex items-center space-x-1"><span class="text-amber-400">4.</span> <span>Wall Plug Hum</span></span>
+                <p class="text-slate-400">Is electrical buzz leaking in from wall sockets and wires?</p>
+              </div>
+            </div>
+            <div class="pt-2 border-t border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between text-[11px] text-slate-400 gap-1">
+              <span><strong class="text-cyan-400">No Duplicate Math:</strong> We originally tested 11 complex math formulas, but found formulas were measuring the same thing twice (99.7% duplicate match). The AI keeps only these 4 essential tests to keep results fast, honest, and easy to understand.</span>
+              <span id="redundancy-math-note" class="font-mono text-cyan-300 text-[10px] shrink-0">Collinearity r=0.9972 filtered</span>
+            </div>
           </div>
+
         </div>
 
       </section>
@@ -1468,7 +1570,7 @@
 
         if (clusterDesc) {
           if (isPlain) {
-            if (cid === 0) clusterDesc.textContent = "Clean physiological recording: Patient was relaxed, electrodes made firm skin contact, and breathing baseline was quiet.";
+            if (cid === 0) clusterDesc.textContent = "Clean recording: Patient was relaxed, electrodes made firm skin contact, and breathing baseline was quiet.";
             else if (cid === 1) clusterDesc.textContent = "Electrode problem detected: One or more chest stickers detached or lost contact with skin, creating signal dropout.";
             else clusterDesc.textContent = "Heavy breathing movement: Patient chest movements or fidgeting caused the ECG waveforms to sway up and down.";
           } else {
@@ -1478,7 +1580,7 @@
 
         if (clusterRisk) {
           const riskVal = cluster.empirical_unacceptable_risk !== undefined ? cluster.empirical_unacceptable_risk : (cluster.cohort_risk ? cluster.cohort_risk * 100 : 13.5);
-          clusterRisk.textContent = `${riskVal.toFixed(1)}% Cohort Risk`;
+          clusterRisk.textContent = `${riskVal.toFixed(1)}% Risk`;
           clusterRisk.className = riskVal > 50 ? 'font-bold text-rose-400' : (riskVal > 25 ? 'font-bold text-amber-400' : 'font-bold text-emerald-400');
         }
       }
@@ -1521,7 +1623,7 @@
       const plExp = document.getElementById('pl-explanation');
       const plRatioEl = document.getElementById('char-pl-ratio');
 
-      if (plRatioEl) plRatioEl.textContent = plRatio.toFixed(6);
+      if (plRatioEl) plRatioEl.textContent = `${(plRatio * 100).toFixed(3)}% (${plRatio < 0.002 ? 'Quiet' : 'Hum Elevated'})`;
 
       if (plRatio >= 0.002) {
         if (plBadge) {
@@ -1535,7 +1637,7 @@
         }
       } else {
         if (plBadge) {
-          plBadge.textContent = 'Grid Hum Normal';
+          plBadge.textContent = 'Clean Grounding';
           plBadge.className = 'px-2.5 py-0.5 rounded-md font-mono font-bold text-[11px] bg-emerald-950 text-emerald-300 border border-emerald-800';
         }
         if (plExp) {
@@ -1545,57 +1647,148 @@
         }
       }
 
-      // 4. 11 Features Detailed Breakdown
+      // 4. Update the 4 Essential Cards with Simple Everyday Language
       const setEl = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-      setEl('feat-mean-centered-rms', `${(chars.mean_centered_rms || rawRms).toFixed(4)} mV`);
-      setEl('feat-max-centered-rms', `${(chars.max_centered_rms || chars.max_rms || 0.0).toFixed(4)} mV`);
-      setEl('feat-mean-abs', `${(chars.mean_abs_amplitude || 0.0).toFixed(4)} mV`);
 
+      // Card 1: Heartbeat Signal Strength
+      setEl('card1-title', isPlain ? '⚡ Heartbeat Strength' : '⚡ Magnitude & RMS Voltage');
+      setEl('card1-label', isPlain ? 'Signal Power:' : 'Centered RMS:');
+      setEl('card1-hero-val', `${centeredRms.toFixed(3)} mV`);
+      setEl('card1-benchmark', isPlain ? 'Healthy Heart Range: 0.15 – 0.50 mV' : 'Clinical Benchmark: 0.150 - 0.500 mV');
+
+      const card1Pill = document.getElementById('card1-status-pill');
+      const card1Bar = document.getElementById('card1-bar');
+      const card1Exp = document.getElementById('card1-explain');
+
+      const card1Pct = Math.min(100, Math.max(10, Math.round((centeredRms / 0.6) * 100)));
+      if (card1Bar) card1Bar.style.width = `${card1Pct}%`;
+
+      if (centeredRms >= 0.15 && centeredRms <= 0.60) {
+        if (card1Pill) { card1Pill.textContent = isPlain ? 'Normal Pulse' : 'Nominal RMS'; card1Pill.className = 'px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-800'; }
+        if (card1Bar) card1Bar.className = 'h-full rounded-full bg-emerald-400 transition-all duration-500';
+        if (card1Exp) card1Exp.textContent = isPlain ? "The heart's electrical pumping waves are clear, strong, and easy for the computer to read." : `Centered AC RMS is within physiological bounds. Frobenius energy concentrates normally in lead vectors.`;
+      } else if (centeredRms < 0.15) {
+        if (card1Pill) { card1Pill.textContent = isPlain ? 'Faint Pulse' : 'Low Voltage'; card1Pill.className = 'px-2 py-0.5 rounded text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-800'; }
+        if (card1Bar) card1Bar.className = 'h-full rounded-full bg-amber-400 transition-all duration-500';
+        if (card1Exp) card1Exp.textContent = isPlain ? "The heart's electrical waves are quite faint. Could be loose electrode contact or low patient voltage." : `Low RMS (< 0.15 mV). Risk of peripheral attenuation or poor electrode conductance.`;
+      } else {
+        if (card1Pill) { card1Pill.textContent = isPlain ? 'High Amplitude' : 'Elevated Energy'; card1Pill.className = 'px-2 py-0.5 rounded text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-800'; }
+        if (card1Bar) card1Bar.className = 'h-full rounded-full bg-amber-400 transition-all duration-500';
+        if (card1Exp) card1Exp.textContent = isPlain ? "Signal voltage is unusually high. The AI filtered out artificial sticker bounce to preserve real heart waves." : `High AC voltage (> 0.60 mV). Centered RMS prevents DC baseline jumps from corrupting SVD.`;
+      }
+
+      // Card 2: Patient Breathing & Chest Movement
       const meanBase = chars.mean_baseline_variation || 0.0;
       const maxBase = chars.max_baseline_variation || 0.0;
-      setEl('feat-mean-baseline', `${meanBase.toFixed(4)} mV`);
-      setEl('feat-max-baseline', `${maxBase.toFixed(4)} mV`);
-      setEl('feat-mean-std', `${(chars.mean_std || 0.0).toFixed(4)} mV`);
+      setEl('card2-title', isPlain ? '🫁 Breathing & Sway' : '🫁 Baseline Wander & Drift');
+      setEl('card2-label', isPlain ? 'Chest Sway:' : 'Baseline Variation:');
+      setEl('card2-hero-val', `${meanBase.toFixed(3)} mV`);
+      setEl('card2-benchmark', isPlain ? 'Quiet Chest Limit: < 0.08 mV' : 'Filtering Threshold: 0.080 mV');
 
+      const card2Pill = document.getElementById('card2-status-pill');
+      const card2Bar = document.getElementById('card2-bar');
+      const card2Exp = document.getElementById('card2-explain');
       const filterStatusEl = document.getElementById('feat-filter-status');
-      if (filterStatusEl) {
-        if (meanBase >= 0.08) {
-          filterStatusEl.textContent = 'Drift ≥ 0.08 mV: Adaptive 0.5 Hz highpass active.';
-          filterStatusEl.className = 'text-[10px] text-amber-400 pt-1 leading-tight';
-        } else {
-          filterStatusEl.textContent = 'Drift < 0.08 mV: No 0.5 Hz filter needed.';
-          filterStatusEl.className = 'text-[10px] text-emerald-400 pt-1 leading-tight';
-        }
+
+      const card2Pct = Math.min(100, Math.max(10, Math.round((meanBase / 0.25) * 100)));
+      if (card2Bar) card2Bar.style.width = `${card2Pct}%`;
+
+      if (meanBase >= 0.08) {
+        if (card2Pill) { card2Pill.textContent = isPlain ? 'Sway Stabilized' : '0.5 Hz Active'; card2Pill.className = 'px-2 py-0.5 rounded text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-800'; }
+        if (card2Bar) card2Bar.className = 'h-full rounded-full bg-amber-400 transition-all duration-500';
+        if (card2Exp) card2Exp.textContent = isPlain ? "Patient took deep breaths during test. The AI smart stabilizer automatically smoothed the line flat." : `Baseline drift (${meanBase.toFixed(3)} mV >= 0.08 mV). Adaptive 0.5 Hz 3rd-order Butterworth highpass filter engaged.`;
+        if (filterStatusEl) { filterStatusEl.textContent = '0.5Hz Active'; filterStatusEl.className = 'text-amber-300 font-bold'; }
+      } else {
+        if (card2Pill) { card2Pill.textContent = isPlain ? 'Quiet & Steady' : 'Quiet Baseline'; card2Pill.className = 'px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-800'; }
+        if (card2Bar) card2Bar.className = 'h-full rounded-full bg-emerald-400 transition-all duration-500';
+        if (card2Exp) card2Exp.textContent = isPlain ? "Patient stayed quiet and still. Breathing baseline is calm with no waving line." : `Baseline drift (${meanBase.toFixed(3)} mV < 0.08 mV). Baseline is stable; highpass filtering safely bypassed.`;
+        if (filterStatusEl) { filterStatusEl.textContent = 'No Filter Needed'; filterStatusEl.className = 'text-emerald-400'; }
       }
 
+      // Card 3: Muscle Shivers & Chills
       const meanHf = chars.mean_high_frequency_ratio || 0.0;
       const maxHf = chars.max_high_frequency_ratio || 0.0;
-      setEl('feat-mean-hf', `${(meanHf * 100).toFixed(2)}%`);
-      setEl('feat-max-hf', `${(maxHf * 100).toFixed(2)}%`);
-      setEl('feat-cwt-ceiling', (pred && pred.max_frequency_hz ? `${pred.max_frequency_hz.toFixed(1)} Hz` : (meanHf > 0.05 ? '50.0 Hz' : '40.0 Hz')));
+      setEl('card3-title', isPlain ? '🌊 Muscle Shivering' : '🌊 High-Frequency Noise (EMG)');
+      setEl('card3-label', isPlain ? 'Muscle Ripple:' : 'HF Power Ratio:');
+      setEl('card3-hero-val', `${(meanHf * 100).toFixed(2)}%`);
+      setEl('card3-benchmark', isPlain ? 'Normal Relaxed: < 5.0%' : 'EMG Noise Bound: < 5.0% (f ≥ 20Hz)');
 
-      const tremorStatusEl = document.getElementById('feat-tremor-status');
-      if (tremorStatusEl) {
-        if (meanHf >= 0.05) {
-          tremorStatusEl.textContent = 'Tremor elevated: CWT frequency expanded to 50 Hz.';
-          tremorStatusEl.className = 'text-[10px] text-amber-400 pt-1 leading-tight';
-        } else {
-          tremorStatusEl.textContent = 'Tremor normal: Standard 40 Hz CWT ceiling applied.';
-          tremorStatusEl.className = 'text-[10px] text-slate-400 pt-1 leading-tight';
-        }
+      const card3Pill = document.getElementById('card3-status-pill');
+      const card3Bar = document.getElementById('card3-bar');
+      const card3Exp = document.getElementById('card3-explain');
+
+      const card3Pct = Math.min(100, Math.max(10, Math.round((meanHf / 0.15) * 100)));
+      if (card3Bar) card3Bar.style.width = `${card3Pct}%`;
+
+      if (meanHf >= 0.05) {
+        if (card3Pill) { card3Pill.textContent = isPlain ? 'Shivering Detected' : 'Elevated EMG'; card3Pill.className = 'px-2 py-0.5 rounded text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-800'; }
+        if (card3Bar) card3Bar.className = 'h-full rounded-full bg-amber-400 transition-all duration-500';
+        if (card3Exp) card3Exp.textContent = isPlain ? "Patient was shivering or tense. The AI expanded wavelet frequencies to isolate chills from genuine heart spikes." : `High-frequency power ratio ${(meanHf * 100).toFixed(2)}% >= 5%. CWT Morlet ceiling adapted to 50 Hz.`;
+      } else {
+        if (card3Pill) { card3Pill.textContent = isPlain ? 'Relaxed Muscles' : 'Low Tremor'; card3Pill.className = 'px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-800'; }
+        if (card3Bar) card3Bar.className = 'h-full rounded-full bg-emerald-400 transition-all duration-500';
+        if (card3Exp) card3Exp.textContent = isPlain ? "The patient was calm with relaxed muscles. No cold chills or muscle shivering interfering with the wave." : `HF energy ${(meanHf * 100).toFixed(2)}% < 5.0%. Standard 1.0 - 40.0 Hz clinical evaluation band applied.`;
       }
 
-      setEl('feat-mean-pl', `${(plRatio * 100).toFixed(3)}%`);
+      // Card 4: Wall Socket Electrical Buzz (50/60 Hz)
+      setEl('card4-title', isPlain ? '🔌 Wall Plug Buzz' : '🔌 Powerline (50/60 Hz Hum)');
+      setEl('card4-label', isPlain ? 'Electrical Buzz:' : 'Mains Ratio:');
+      setEl('card4-hero-val', `${(plRatio * 100).toFixed(3)}%`);
+      setEl('card4-benchmark', isPlain ? 'Shielded Limit: < 0.20%' : 'Grounding Threshold: < 0.20%');
+
+      const card4Pill = document.getElementById('card4-status-pill');
+      const card4Bar = document.getElementById('card4-bar');
+      const card4Exp = document.getElementById('card4-explain');
+
+      const card4Pct = Math.min(100, Math.max(8, Math.round((plRatio / 0.005) * 100)));
+      if (card4Bar) card4Bar.style.width = `${card4Pct}%`;
+
+      if (plRatio >= 0.002) {
+        if (card4Pill) { card4Pill.textContent = isPlain ? 'Electrical Buzz' : '50/60 Hz Flagged'; card4Pill.className = 'px-2 py-0.5 rounded text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-800'; }
+        if (card4Bar) card4Bar.className = 'h-full rounded-full bg-amber-400 transition-all duration-500';
+        if (card4Exp) card4Exp.textContent = isPlain ? "Wall socket electrical buzz detected (50/60 Hz). Make sure patient lead cables are grounded." : `Powerline interference ${(plRatio * 100).toFixed(3)}% exceeds 0.2% limit. Mains notch compensation required.`;
+      } else {
+        if (card4Pill) { card4Pill.textContent = isPlain ? 'Clean Shielding' : 'Shielded Ground'; card4Pill.className = 'px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-800'; }
+        if (card4Bar) card4Bar.className = 'h-full rounded-full bg-emerald-400 transition-all duration-500';
+        if (card4Exp) card4Exp.textContent = isPlain ? "Zero electrical buzz leaking in from room wall plugs. Wire shielding and patient grounding are clean." : `Powerline spectral ratio ${(plRatio * 100).toFixed(3)}% is negligible. Room electrical shielding intact.`;
+      }
+
+      // Technical Footers
+      setEl('feat-max-centered-rms', `${(chars.max_centered_rms || chars.max_rms || 0.0).toFixed(3)} mV`);
+      setEl('feat-mean-abs', `${(chars.mean_abs_amplitude || 0.0).toFixed(3)} mV`);
+      setEl('feat-max-baseline', `${maxBase.toFixed(3)} mV`);
+      setEl('feat-max-hf', `${(maxHf * 100).toFixed(2)}%`);
+      setEl('feat-cwt-ceiling', (pred && pred.max_frequency_hz ? `${pred.max_frequency_hz.toFixed(0)} Hz` : (meanHf > 0.05 ? '50 Hz' : '40 Hz')));
       setEl('feat-max-pl', `${((chars.max_powerline_ratio || plRatio) * 100).toFixed(3)}%`);
+
       const notchEl = document.getElementById('feat-notch-status');
       if (notchEl) {
-        if (plRatio >= 0.002) {
-          notchEl.textContent = 'Interference Flagged';
-          notchEl.className = 'font-mono text-amber-400 font-semibold';
-        } else {
-          notchEl.textContent = 'Not Required';
-          notchEl.className = 'font-mono text-emerald-400 font-semibold';
-        }
+        notchEl.textContent = plRatio >= 0.002 ? 'Flagged' : 'Clean';
+        notchEl.className = plRatio >= 0.002 ? 'text-amber-300 font-bold' : 'text-emerald-400';
+      }
+
+      // Redundancy Insight Box text updates according to audience mode
+      const redTitle = document.getElementById('redundancy-title');
+      const redText = document.getElementById('redundancy-plain-text');
+      const redMath = document.getElementById('redundancy-math-note');
+      const testsTitle = document.getElementById('tests-box-title');
+      const testsBadge = document.getElementById('tests-box-badge');
+      const testsNote = document.getElementById('tests-box-note');
+
+      if (isPlain) {
+        if (testsTitle) testsTitle.textContent = "4 Essential Signal Health Checks";
+        if (testsBadge) testsBadge.textContent = "Plain English Diagnostics";
+        if (testsNote) testsNote.textContent = "Everyday language • Zero confusing math";
+        if (redTitle) redTitle.textContent = "Why We Test These 4 Things (In Plain, Simple Words)";
+        if (redText) redText.innerHTML = "When doctors or computers look at an ECG recording, they only need answers to <strong>4 fundamental physical questions</strong>:";
+        if (redMath) redMath.textContent = "Collinearity r=0.9972 filtered";
+      } else {
+        if (testsTitle) testsTitle.textContent = "11 Empirical Signal Measurements (Filtered)";
+        if (testsBadge) testsBadge.textContent = "Physical DSP Features";
+        if (testsNote) testsNote.textContent = "Multivariate collinearity reduction (Pearson r threshold 0.95)";
+        if (redTitle) redTitle.textContent = "Feature Selection & Collinearity Elimination Rationale";
+        if (redText) redText.innerHTML = "Pearson cross-correlation on 998 records isolated severe collinearity between magnitude measures (r=0.9972) and drift metrics (r=0.9774):";
+        if (redMath) redMath.textContent = "Orthogonal subspace preserved";
       }
     }
 
