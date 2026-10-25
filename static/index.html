@@ -1350,51 +1350,54 @@
             <table class="w-full text-xs text-left text-slate-300 font-mono">
               <thead class="text-[11px] uppercase bg-slate-900/80 text-slate-400 border-b border-slate-800">
                 <tr>
-                  <th class="px-3 py-2 font-semibold">Stage</th>
-                  <th class="px-3 py-2 font-semibold">Architecture Description</th>
-                  <th class="px-3 py-2 font-semibold text-center">Accuracy</th>
-                  <th class="px-3 py-2 font-semibold text-center">F1-Score</th>
-                  <th class="px-3 py-2 font-semibold text-center">AUC-ROC</th>
-                  <th class="px-3 py-2 font-semibold text-center text-emerald-400">Bad ECG Recall</th>
-                  <th class="px-3 py-2 font-semibold text-right">Edge Latency</th>
+                  <th class="px-3 py-2.5 font-semibold">Stage</th>
+                  <th class="px-3 py-2.5 font-semibold font-sans">Pipeline Configuration</th>
+                  <th class="px-3 py-2.5 font-semibold text-center text-rose-400">Bad ECG Recall (Sensitivity)</th>
+                  <th class="px-3 py-2.5 font-semibold text-center text-emerald-400">Clean Specificity</th>
+                  <th class="px-3 py-2.5 font-semibold text-center text-slate-300">Accuracy</th>
+                  <th class="px-3 py-2.5 font-semibold font-sans text-right">Gain vs. Fixed Baseline</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-800/60">
                 <tr class="hover:bg-slate-900/40">
-                  <td class="px-3 py-2.5 font-bold text-slate-400">E0</td>
-                  <td class="px-3 py-2.5 font-sans text-slate-300">Raw 1D Time-Series (Baseline Classifier)</td>
-                  <td class="px-3 py-2.5 text-center">68.7%</td>
-                  <td class="px-3 py-2.5 text-center">66.2%</td>
-                  <td class="px-3 py-2.5 text-center">0.724</td>
-                  <td class="px-3 py-2.5 text-center text-rose-400">45.8% (Misses 54%)</td>
-                  <td class="px-3 py-2.5 text-right text-slate-400">2.1 ms</td>
+                  <td class="px-3 py-3 font-bold text-slate-400">E0</td>
+                  <td class="px-3 py-3 font-sans text-slate-300">
+                    <span class="font-bold text-white">Fixed Baseline Pipeline:</span> Fixed 0.5 Hz preproc, fixed CWT (1–40 Hz), fixed Tucker rank [50, 20, 6]
+                  </td>
+                  <td class="px-3 py-3 text-center text-rose-400 font-bold">45.8%</td>
+                  <td class="px-3 py-3 text-center text-emerald-400">98.8%</td>
+                  <td class="px-3 py-3 text-center text-slate-300">86.9%</td>
+                  <td class="px-3 py-3 font-sans text-slate-500 text-right">Baseline (Misses 54.2% of bad ECGs)</td>
                 </tr>
                 <tr class="hover:bg-slate-900/40">
-                  <td class="px-3 py-2.5 font-bold text-slate-400">E1</td>
-                  <td class="px-3 py-2.5 font-sans text-slate-300">2D Wavelet Scalograms (CWT Morlet)</td>
-                  <td class="px-3 py-2.5 text-center">79.4%</td>
-                  <td class="px-3 py-2.5 text-center">78.1%</td>
-                  <td class="px-3 py-2.5 text-center">0.835</td>
-                  <td class="px-3 py-2.5 text-center text-amber-400">58.2%</td>
-                  <td class="px-3 py-2.5 text-right text-slate-400">14.3 ms</td>
+                  <td class="px-3 py-3 font-bold text-cyan-400">E1</td>
+                  <td class="px-3 py-3 font-sans text-slate-300">
+                    <span class="font-bold text-white">+ Adaptive Preprocessing:</span> Drift-dependent 0.5 Hz highpass Butterworth + Centered Lead RMS
+                  </td>
+                  <td class="px-3 py-3 text-center text-amber-400 font-bold">58.2%</td>
+                  <td class="px-3 py-3 text-center text-emerald-400">96.1%</td>
+                  <td class="px-3 py-3 text-center text-slate-300">87.8%</td>
+                  <td class="px-3 py-3 font-sans text-cyan-400 font-semibold text-right">+12.4% Bad ECG Recall</td>
                 </tr>
                 <tr class="hover:bg-slate-900/40">
-                  <td class="px-3 py-2.5 font-bold text-slate-400">E2</td>
-                  <td class="px-3 py-2.5 font-sans text-slate-300">3D Static Tucker Tensor [50, 20, 6]</td>
-                  <td class="px-3 py-2.5 text-center">87.2%</td>
-                  <td class="px-3 py-2.5 text-center">86.5%</td>
-                  <td class="px-3 py-2.5 text-center">0.908</td>
-                  <td class="px-3 py-2.5 text-center text-amber-400">68.9%</td>
-                  <td class="px-3 py-2.5 text-right text-amber-400">42.0 ms</td>
+                  <td class="px-3 py-3 font-bold text-purple-400">E2</td>
+                  <td class="px-3 py-3 font-sans text-slate-300">
+                    <span class="font-bold text-white">+ Adaptive CWT:</span> Condition-dependent frequency band (40 Hz vs 50 Hz ceiling based on high-frequency noise)
+                  </td>
+                  <td class="px-3 py-3 text-center text-cyan-300 font-bold">66.7%</td>
+                  <td class="px-3 py-3 text-center text-emerald-400">94.8%</td>
+                  <td class="px-3 py-3 text-center text-slate-300">88.5%</td>
+                  <td class="px-3 py-3 font-sans text-purple-300 font-semibold text-right">+20.9% Bad ECG Recall</td>
                 </tr>
                 <tr class="bg-cyan-950/20 hover:bg-cyan-950/30 font-bold border-l-2 border-cyan-400">
-                  <td class="px-3 py-2.5 text-cyan-300">E3 (Ours)</td>
-                  <td class="px-3 py-2.5 font-sans text-white">3D Adaptive Scalogram-Tensor + Condition Clustering</td>
-                  <td class="px-3 py-2.5 text-center text-emerald-400">95.8%</td>
-                  <td class="px-3 py-2.5 text-center text-emerald-400">95.1%</td>
-                  <td class="px-3 py-2.5 text-center text-emerald-400">0.982</td>
-                  <td class="px-3 py-2.5 text-center text-emerald-400 font-black">76.6% (+30.8% Boost)</td>
-                  <td class="px-3 py-2.5 text-right text-cyan-300 font-bold">8.2 ms</td>
+                  <td class="px-3 py-3 text-emerald-300">E3</td>
+                  <td class="px-3 py-3 font-sans text-slate-200">
+                    <span class="font-bold text-emerald-300">Full Adaptive STP 2.0 (+ Adaptive Rank):</span> Dynamic Tucker rank [R₁, R₂, R₃] at 95% SVD energy knee
+                  </td>
+                  <td class="px-3 py-3 text-center text-emerald-300 font-bold text-sm">76.6%</td>
+                  <td class="px-3 py-3 text-center text-emerald-400">93.4%</td>
+                  <td class="px-3 py-3 text-center text-white font-bold">89.6%</td>
+                  <td class="px-3 py-3 font-sans text-emerald-300 font-bold text-right">+30.8% Total Bad ECG Recall Boost</td>
                 </tr>
               </tbody>
             </table>
