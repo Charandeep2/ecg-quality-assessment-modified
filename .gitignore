@@ -20,3 +20,6 @@ scratch/
 # Duplicate / redundant raw text exports (WFDB uses .hea/.dat)
 dataset/raw/set-a/*.txt
 
+
+*.zip
+models/*.pt
